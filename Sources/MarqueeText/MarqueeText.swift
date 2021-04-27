@@ -18,21 +18,16 @@ public struct MarqueeText : View {
                     Text(self.text).lineLimit(1)
                         .font(.init(font))
                         .offset(x: self.animate ? -stringWidth - stringHeight * 2 : 0)
-                        .animation(Animation.linear(duration: Double(stringWidth) / 30).delay(startDelay).repeatForever(autoreverses: false)
-                        )
-                        .onAppear() {
-                            if geometry.size.width < stringWidth {
-                                self.animate = true
-                            }
-                        }
+                        .animation(self.animate ? Animation.linear(duration: Double(stringWidth) / 30).delay(startDelay).repeatForever(autoreverses: false) : Animation.linear(duration: 0.0))
+                        .onAppear { self.animate = true }
+                        .onDisappear { self.animate = false }
                         .fixedSize(horizontal: true, vertical: false)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
 
                     Text(self.text).lineLimit(1)
                         .font(.init(font))
                         .offset(x: self.animate ? 0 : stringWidth + stringHeight * 2)
-                        .animation(Animation.linear(duration: Double(stringWidth) / 30).delay(startDelay).repeatForever(autoreverses: false)
-                        )
+                        .animation(self.animate ? Animation.linear(duration: Double(stringWidth) / 30).delay(startDelay).repeatForever(autoreverses: false) : Animation.linear(duration: 0.0))
                         .fixedSize(horizontal: true, vertical: false)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
                 }.offset(x: leftFade)
@@ -53,6 +48,7 @@ public struct MarqueeText : View {
             }
         }.frame(height: stringHeight)
     }
+    
     public init(text: String, font: UIFont, leftFade: CGFloat, rightFade: CGFloat, startDelay: Double) {
         self.text = text
         self.font = font

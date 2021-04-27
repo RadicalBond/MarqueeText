@@ -10,7 +10,6 @@ let package = Package(
         SupportedPlatform.macOS(.v10_15),
         SupportedPlatform.watchOS(.v6),
         SupportedPlatform.tvOS(.v13)
-
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
